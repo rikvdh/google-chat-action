@@ -110,8 +110,6 @@ export function createDefaultCardV2Section(): object[] {
 
   const additionalButtonName = core.getInput('additionalButtonName')
   const additionalButtonUrl = core.getInput('additionalButtonUrl')
-  console.log(`Additional button name: ${additionalButtonName}`)
-  console.log(`Additional button name: ${additionalButtonUrl}`)
   if (additionalButtonName !== '' && additionalButtonUrl !== '') {
     buttonArray.push({
       text: additionalButtonName,

@@ -29312,10 +29312,11 @@ exports.createDefaultCardV2Section = exports.createCardV2Section = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const statusIndication_1 = __nccwpck_require__(6334);
-const gitHubIconUrl = 'https://raw.githubusercontent.com/SimonScholz/google-chat-action/main/assets/github-cat-128.png';
-const gitHubCircleIconUrl = 'https://raw.githubusercontent.com/SimonScholz/google-chat-action/main/assets/github-128-circle.png';
-const gitBranchIconUrl = 'https://raw.githubusercontent.com/SimonScholz/google-chat-action/main/assets/git-branch-128.png';
-const gitBranchCircleIconUrl = 'https://raw.githubusercontent.com/SimonScholz/google-chat-action/main/assets/git-branch-128-circle.png';
+const gitHubIconUrl = 'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/github-cat-128.png';
+const gitHubCircleIconUrl = 'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/github-128-circle.png';
+const gitBranchIconUrl = 'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/git-branch-128.png';
+const gitBranchCircleIconUrl = 'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/git-branch-128-circle.png';
+const userIconUrl = 'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/user.png';
 function createCardV2Section() {
     const additionalSections = core.getInput('additionalSections');
     const additionalSectionsJson = JSON.parse(additionalSections);
@@ -29347,32 +29348,32 @@ function createDefaultCardV2Section() {
     }
     const buttonArray = [
         {
-            text: 'Go to repo',
+            text: 'Repository',
             icon: {
                 iconUrl: gitHubIconUrl
             },
             onClick: {
                 openLink: {
-                    url: `https://github.com/${repoPath}`
+                    url: `${github.context.serverUrl}/${repoPath}`
                 }
             }
         },
         {
-            text: 'Go to action run',
+            text: 'Action run',
             icon: {
                 knownIcon: 'STAR'
             },
             onClick: {
                 openLink: {
-                    url: `https://github.com/${repoPath}/actions/runs/${github.context.runId}`
+                    url: `${github.context.serverUrl}/${repoPath}/actions/runs/${github.context.runId}`
                 }
             }
         }
     ];
     if (github.context.eventName === 'push') {
-        const pushCommitUrl = `https://github.com/${repoPath}/commit/${github.context.sha}`;
+        const pushCommitUrl = `${github.context.serverUrl}/${repoPath}/commit/${github.context.sha}`;
         buttonArray.push({
-            text: 'Go to commit',
+            text: 'Commit',
             icon: {
                 iconUrl: gitBranchIconUrl
             },
@@ -29384,9 +29385,9 @@ function createDefaultCardV2Section() {
         });
     }
     else if (github.context.eventName === 'pull_request') {
-        const pullRequestUrl = `https://github.com/${repoPath}/pull/${github.context.issue.number}`;
+        const pullRequestUrl = `${github.context.serverUrl}/${repoPath}/pull/${github.context.issue.number}`;
         buttonArray.push({
-            text: 'Go to pull request',
+            text: 'PR',
             icon: {
                 iconUrl: gitBranchIconUrl
             },
@@ -29399,17 +29400,18 @@ function createDefaultCardV2Section() {
     }
     defaultCardV2Section[0].widgets.push({
         decoratedText: {
-            startIcon: {
-                iconUrl: gitHubCircleIconUrl
-            },
+            startIcon: { iconUrl: gitHubCircleIconUrl },
             text: repoPath
         }
     }, {
         decoratedText: {
-            startIcon: {
-                iconUrl: gitBranchCircleIconUrl
-            },
-            text: github.context.ref
+            startIcon: { iconUrl: gitBranchCircleIconUrl },
+            text: process.env.GITHUB_REF_NAME
+        }
+    }, {
+        decoratedText: {
+            startIcon: { iconUrl: userIconUrl },
+            text: github.context.actor
         }
     }, {
         buttonList: {

@@ -59,7 +59,7 @@ export function createDefaultCardV2Section(): object[] {
     })
   }
 
-  const buttonArray = [
+  let buttonArray = [
     {
       text: 'Repository',
       icon: {
@@ -111,6 +111,10 @@ export function createDefaultCardV2Section(): object[] {
       }
     })
   }
+
+  const additionalButtons = core.getInput('additionalButtons')
+  const additionalButtonsJson = JSON.parse(additionalButtons)
+  buttonArray = buttonArray.concat(additionalButtonsJson)
 
   defaultCardV2Section[0].widgets.push({
     decoratedText: {

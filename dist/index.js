@@ -29345,7 +29345,7 @@ function createDefaultCardV2Section() {
             }
         });
     }
-    const buttonArray = [
+    let buttonArray = [
         {
             text: 'Repository',
             icon: {
@@ -29397,6 +29397,9 @@ function createDefaultCardV2Section() {
             }
         });
     }
+    const additionalButtons = core.getInput('additionalButtons');
+    const additionalButtonsJson = JSON.parse(additionalButtons);
+    buttonArray = buttonArray.concat(additionalButtonsJson);
     defaultCardV2Section[0].widgets.push({
         decoratedText: {
             startIcon: { iconUrl: gitHubCircleIconUrl },

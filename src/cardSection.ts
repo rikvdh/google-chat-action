@@ -78,7 +78,7 @@ export function createDefaultCardV2Section(): object[] {
       },
       onClick: {
         openLink: {
-          url: `${github.context.serverUrl}/${repoPath}/actions/runs/${github.context.runId}`
+          url: `${github.context.serverUrl}/${repoPath}/actions/runs/${github.context.runNumber}`
         }
       }
     }

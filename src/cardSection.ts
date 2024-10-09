@@ -59,7 +59,7 @@ export function createDefaultCardV2Section(): object[] {
     })
   }
 
-  let buttonArray = [
+  const buttonArray = [
     {
       text: 'Repository',
       icon: {
@@ -88,13 +88,9 @@ export function createDefaultCardV2Section(): object[] {
     const pushCommitUrl = `${github.context.serverUrl}/${repoPath}/commit/${github.context.sha}`
     buttonArray.push({
       text: 'Commit',
-      icon: {
-        iconUrl: gitBranchIconUrl
-      },
+      icon: { iconUrl: gitBranchIconUrl },
       onClick: {
-        openLink: {
-          url: pushCommitUrl
-        }
+        openLink: { url: pushCommitUrl }
       }
     })
   } else if (github.context.eventName === 'pull_request') {
@@ -112,9 +108,17 @@ export function createDefaultCardV2Section(): object[] {
     })
   }
 
-  const additionalButtons = core.getInput('additionalButtons')
-  const additionalButtonsJson = JSON.parse(additionalButtons)
-  buttonArray = buttonArray.concat(additionalButtonsJson)
+  const additionalButtonsName = core.getInput('additionalButtonName')
+  const additionalButtonURL = core.getInput('additionalButtonUrl')
+  if (additionalButtonsName !== '' && additionalButtonURL !== '') {
+    buttonArray.push({
+      text: additionalButtonsName,
+      icon: { iconUrl: '' },
+      onClick: {
+        openLink: { url: additionalButtonURL }
+      }
+    })
+  }
 
   defaultCardV2Section[0].widgets.push({
     decoratedText: {

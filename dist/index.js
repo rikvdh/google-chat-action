@@ -29380,7 +29380,7 @@ function createDefaultCardV2Section() {
         });
     }
     else if (github.context.eventName === 'pull_request') {
-        const pullRequestUrl = `${github.context.serverUrl}/${repoPath}/pull/${github.context.issue.number}`;
+        const pullRequestUrl = `${github.context.serverUrl}/${repoPath}/pulls/${github.context.issue.number}`;
         buttonArray.push({
             text: 'PR',
             icon: {
@@ -29395,8 +29395,6 @@ function createDefaultCardV2Section() {
     }
     const additionalButtonName = core.getInput('additionalButtonName');
     const additionalButtonUrl = core.getInput('additionalButtonUrl');
-    console.log(`Additional button name: ${additionalButtonName}`);
-    console.log(`Additional button name: ${additionalButtonUrl}`);
     if (additionalButtonName !== '' && additionalButtonUrl !== '') {
         buttonArray.push({
             text: additionalButtonName,

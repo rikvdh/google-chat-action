@@ -115,7 +115,9 @@ export function createDefaultCardV2Section(): object[] {
   if (additionalButtonName !== '' && additionalButtonUrl !== '') {
     buttonArray.push({
       text: additionalButtonName,
-      icon: { iconUrl: '' },
+      icon: {
+        knownIcon: 'DESCRIPTION'
+      },
       onClick: {
         openLink: { url: additionalButtonUrl }
       }

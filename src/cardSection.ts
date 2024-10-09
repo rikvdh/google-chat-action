@@ -108,14 +108,16 @@ export function createDefaultCardV2Section(): object[] {
     })
   }
 
-  const additionalButtonsName = core.getInput('additionalButtonName')
-  const additionalButtonURL = core.getInput('additionalButtonUrl')
-  if (additionalButtonsName !== '' && additionalButtonURL !== '') {
+  const additionalButtonName = core.getInput('additionalButtonName')
+  const additionalButtonUrl = core.getInput('additionalButtonUrl')
+  console.log(`Additional button name: ${additionalButtonName}`)
+  console.log(`Additional button name: ${additionalButtonUrl}`)
+  if (additionalButtonName !== '' && additionalButtonUrl !== '') {
     buttonArray.push({
-      text: additionalButtonsName,
+      text: additionalButtonName,
       icon: { iconUrl: '' },
       onClick: {
-        openLink: { url: additionalButtonURL }
+        openLink: { url: additionalButtonUrl }
       }
     })
   }

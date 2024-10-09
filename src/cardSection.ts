@@ -94,7 +94,7 @@ export function createDefaultCardV2Section(): object[] {
       }
     })
   } else if (github.context.eventName === 'pull_request') {
-    const pullRequestUrl = `${github.context.serverUrl}/${repoPath}/pull/${github.context.issue.number}`
+    const pullRequestUrl = `${github.context.serverUrl}/${repoPath}/pulls/${github.context.issue.number}`
     buttonArray.push({
       text: 'PR',
       icon: {

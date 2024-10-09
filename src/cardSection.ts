@@ -18,8 +18,6 @@ const gitBranchIconUrl =
   'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/git-branch-128.png'
 const gitBranchCircleIconUrl =
   'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/git-branch-128-circle.png'
-const userIconUrl =
-  'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/user.png'
 
 export function createCardV2Section(): object[] {
   const additionalSections = core.getInput('additionalSections')
@@ -114,31 +112,25 @@ export function createDefaultCardV2Section(): object[] {
     })
   }
 
-  defaultCardV2Section[0].widgets.push(
-    {
-      decoratedText: {
-        startIcon: { iconUrl: gitHubCircleIconUrl },
-        text: repoPath
-      }
-    },
-    {
+  defaultCardV2Section[0].widgets.push({
+    decoratedText: {
+      startIcon: { iconUrl: gitHubCircleIconUrl },
+      text: repoPath
+    }
+  })
+  if (github.context.eventName !== 'pull_request') {
+    defaultCardV2Section[0].widgets.push({
       decoratedText: {
         startIcon: { iconUrl: gitBranchCircleIconUrl },
         text: process.env.GITHUB_REF_NAME
       }
-    },
-    {
-      decoratedText: {
-        startIcon: { iconUrl: userIconUrl },
-        text: github.context.actor
-      }
-    },
-    {
-      buttonList: {
-        buttons: buttonArray
-      }
+    })
+  }
+  defaultCardV2Section[0].widgets.push({
+    buttonList: {
+      buttons: buttonArray
     }
-  )
+  })
 
   return defaultCardV2Section
 }

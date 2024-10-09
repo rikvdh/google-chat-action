@@ -29316,7 +29316,6 @@ const gitHubIconUrl = 'https://raw.githubusercontent.com/rikvdh/google-chat-acti
 const gitHubCircleIconUrl = 'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/github-128-circle.png';
 const gitBranchIconUrl = 'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/git-branch-128.png';
 const gitBranchCircleIconUrl = 'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/git-branch-128-circle.png';
-const userIconUrl = 'https://raw.githubusercontent.com/rikvdh/google-chat-action/main/assets/user.png';
 function createCardV2Section() {
     const additionalSections = core.getInput('additionalSections');
     const additionalSectionsJson = JSON.parse(additionalSections);
@@ -29403,17 +29402,16 @@ function createDefaultCardV2Section() {
             startIcon: { iconUrl: gitHubCircleIconUrl },
             text: repoPath
         }
-    }, {
-        decoratedText: {
-            startIcon: { iconUrl: gitBranchCircleIconUrl },
-            text: process.env.GITHUB_REF_NAME
-        }
-    }, {
-        decoratedText: {
-            startIcon: { iconUrl: userIconUrl },
-            text: github.context.actor
-        }
-    }, {
+    });
+    if (github.context.eventName !== 'pull_request') {
+        defaultCardV2Section[0].widgets.push({
+            decoratedText: {
+                startIcon: { iconUrl: gitBranchCircleIconUrl },
+                text: process.env.GITHUB_REF_NAME
+            }
+        });
+    }
+    defaultCardV2Section[0].widgets.push({
         buttonList: {
             buttons: buttonArray
         }
